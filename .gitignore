@@ -1,0 +1,5 @@
+.aws-sam/
+samconfig.toml
+*.zip
+frontend-backup/
+__pycache__/
