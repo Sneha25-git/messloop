@@ -5,7 +5,7 @@
 MessLoop turns what a hostel mess or canteen throws away into a timed action plan. It splits mixed waste into separate streams, tells staff what to do with each one, where it should go and what to do if the deadline is missed, and logs every batch.
 
 - Live demo: https://main.dclavxiv5avzi.amplifyapp.com/
-- Demo video: PASTE-YOUR-YOUTUBE-URL-HERE
+- Demo video: https://youtu.be/ILjWgUGm7mY?si=fMVyz3LaihZeH0xr
 - Track: Waste and Energy (WeMakeDevs x AWS, Bharat Builds Tour)
 
 ## The problem
@@ -71,4 +71,4 @@ Validated rules, a real network of composters, biogas units and NGOs, and a pilo
 
 ## Author
 
-Built solo by Sneha Sah (team leader and only member).
+Built solo by Sneha Kumari(team leader and only member).
