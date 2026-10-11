@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: MessLoop - timed waste-stream routing for mess kitchens
+
+Parameters:
+  ModelId:
+    Type: String
+    Default: ""
+    Description: Bedrock model or inference-profile ID that supports images. Leave empty to run rules-only.
+  AlertEmail:
+    Type: String
+    Default: ""
+    Description: Email for deadline alerts. Leave empty to skip email.
+
+Conditions:
+  HasEmail: !Not [!Equals [!Ref AlertEmail, ""]]
+
+Resources:
+  BatchTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey: { Name: batchId, Type: String }
+
+  AlertTopic:
+    Type: AWS::SNS::Topic
+
+  AlertSubscription:
+    Type: AWS::SNS::Subscription
+    Condition: HasEmail
+    Properties:
+      TopicArn: !Ref AlertTopic
+      Protocol: email
+      Endpoint: !Ref AlertEmail
+
+  MessLoopApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: ["*"]
+        AllowHeaders: ["*"]
+        AllowMethods: ["GET", "POST", "OPTIONS"]
+
+  MessLoopFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app/
+      Handler: handler.lambda_handler
+      Runtime: python3.13
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref BatchTable
+          MODEL_ID: !Ref ModelId
+      Policies:
+        - DynamoDBCrudPolicy: { TableName: !Ref BatchTable }
+        - Statement:
+            - Effect: Allow
+              Action: ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
+              Resource: "*"
+      Events:
+        Analyze:
+          Type: HttpApi
+          Properties: { ApiId: !Ref MessLoopApi, Path: /analyze, Method: POST }
+        Confirm:
+          Type: HttpApi
+          Properties: { ApiId: !Ref MessLoopApi, Path: /confirm, Method: POST }
+        Batches:
+          Type: HttpApi
+          Properties: { ApiId: !Ref MessLoopApi, Path: /batches, Method: GET }
+        Insights:
+          Type: HttpApi
+          Properties: { ApiId: !Ref MessLoopApi, Path: /insights, Method: GET }
+
+  AlertsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app/
+      Handler: alerts.lambda_handler
+      Runtime: python3.13
+      Timeout: 30
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref BatchTable
+          TOPIC_ARN: !Ref AlertTopic
+      Policies:
+        - DynamoDBCrudPolicy: { TableName: !Ref BatchTable }
+        - SNSPublishMessagePolicy: { TopicName: !GetAtt AlertTopic.TopicName }
+      Events:
+        Every15Min:
+          Type: Schedule
+          Properties: { Schedule: "rate(15 minutes)" }
+
+Outputs:
+  ApiUrl:
+    Value: !Sub "https://${MessLoopApi}.execute-api.${AWS::Region}.amazonaws.com"
