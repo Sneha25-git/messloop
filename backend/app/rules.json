@@ -1,0 +1,67 @@
+{
+ "raw_veg_scraps": {
+  "label": "Raw vegetable scraps",
+  "icon": "🥬",
+  "color": "#34d399",
+  "window_hours": 24,
+  "action": "Collect in a covered bin, kept apart from cooked food",
+  "destination": "Compost pit, biogas unit or cattle-feed buyer",
+  "reroute": "Compost pit"
+ },
+ "cooked_leftovers": {
+  "label": "Cooked leftovers",
+  "icon": "🍛",
+  "color": "#fbbf24",
+  "window_hours": 4,
+  "action": "Keep separate from raw scraps and hand over quickly",
+  "destination": "Biogas unit or animal-feed collector (not for human reuse)",
+  "reroute": "Compost if the feed pickup is missed",
+  "tag": "Not for human reuse"
+ },
+ "untouched_surplus": {
+  "label": "Untouched surplus food",
+  "icon": "🍱",
+  "color": "#fb7185",
+  "window_hours": 2,
+  "action": "Pack in clean containers straight away",
+  "destination": "Partner NGO or food bank",
+  "reroute": "Biogas or animal feed",
+  "tag": "Safe to donate if packed and handed over in time"
+ },
+ "used_cooking_oil": {
+  "label": "Used cooking oil",
+  "icon": "🛢️",
+  "color": "#f59e0b",
+  "window_hours": 72,
+  "action": "Filter, store sealed, never pour into drains",
+  "destination": "Authorised used-oil collector (biodiesel)",
+  "reroute": "Keep sealed and call the next collector"
+ },
+ "starchy_water": {
+  "label": "Starchy water (rice, dal)",
+  "icon": "💧",
+  "color": "#38bdf8",
+  "window_hours": 12,
+  "action": "Cool it and keep it apart from greasy water",
+  "destination": "Water non-edible plants or moisten the compost",
+  "reroute": "Compost pit"
+ },
+ "greasy_water": {
+  "label": "Greasy kitchen water",
+  "icon": "🚰",
+  "color": "#22d3ee",
+  "window_hours": 2,
+  "action": "Pass through a grease trap before it reaches the drain",
+  "destination": "Grease trap, then drain",
+  "reroute": "Clean the trap and call the septic service"
+ },
+ "packaging": {
+  "label": "Dry packaging",
+  "icon": "📦",
+  "color": "#a78bfa",
+  "window_hours": 168,
+  "action": "Rinse, dry and keep with dry recyclables",
+  "destination": "Dry-waste recycler or kabadiwala",
+  "reroute": "Next weekly pickup"
+ }
+}
