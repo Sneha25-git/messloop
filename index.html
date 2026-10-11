@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MessLoop | Know what to do with every scrap</title>
+<meta name="description" content="MessLoop turns one photo of kitchen waste into a timed plan: what goes where, and the deadline for each stream.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="nav">
+  <a class="logo" href="#top"><span class="mark"></span>MessLoop</a>
+  <nav><a href="#how">How it works</a><a href="#demo">Try it</a><a href="#log">Logbook</a><a href="#insights">Insights</a><a href="#aws">Built on AWS</a></nav>
+</header>
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Know what to do with every scrap, and by when.</h1>
+      <p>One photo of your kitchen waste becomes a timed plan: which stream goes where, and the deadline before it spoils or becomes useless.</p>
+      <div class="cta"><a class="btn" href="#demo">Sort my kitchen waste</a><a class="btn ghost" href="#how">See how it works</a></div>
+      <div class="stats" id="stats" hidden>
+        <div><b id="sBatches">0</b><span>batches logged</span></div>
+        <div><b id="sKg">0</b><span>kg routed</span></div>
+      </div>
+    </div>
+    <div class="hero-art"><svg id="flow" viewBox="0 0 520 450" role="img" aria-label="Mixed kitchen waste splitting into separate streams"></svg></div>
+  </section>
+
+  <section id="how" class="how">
+    <h2>From one bin to seven clear streams</h2>
+    <div class="steps">
+      <article><span class="n">1</span><h3>Snap or describe</h3><p>Photograph the day's waste or type what you have, like "4 kg onion peels and rice water".</p></article>
+      <article><span class="n">2</span><h3>Sort into streams</h3><p>AI spots each item. A fixed rule table then picks the action and destination, so advice stays consistent.</p></article>
+      <article><span class="n">3</span><h3>Beat the clock</h3><p>Each stream gets a live countdown and a fallback route. Every batch is logged for your records.</p></article>
+    </div>
+  </section>
+
+  <section id="demo" class="demo">
+    <h2>Try it on your waste</h2>
+    <div class="panel">
+      <div class="input">
+        <label class="drop" id="drop" tabindex="0">
+          <input type="file" id="file" accept="image/*" hidden>
+          <img id="preview" alt="" hidden>
+          <span class="scan" hidden></span>
+          <span class="hint" id="hint"><b>Drop a photo here</b>or tap to choose one</span>
+        </label>
+        <div class="fields"><select id="meal" aria-label="Meal"><option>Breakfast</option><option>Lunch</option><option>Snacks</option><option selected>Dinner</option></select><input id="dishIn" placeholder="Main dish, e.g. dal" aria-label="Main dish"><input id="head" type="number" min="0" placeholder="Students served" aria-label="Students served"><input id="cooked" type="number" min="0" step="0.5" placeholder="Cooked kg (optional)" aria-label="Cooked kilograms"></div>
+        <textarea id="notes" rows="3" placeholder="Optional notes, e.g. 4 kg onion peels, 2 L rice water, used oil from frying"></textarea>
+        <div class="quick" id="quick"><button type="button" data-t="vegetable scraps" data-u="kg">🥬 Veg scraps</button><button type="button" data-t="cooked leftovers" data-u="kg">🍛 Cooked leftovers</button><button type="button" data-t="untouched surplus" data-u="kg">🍱 Untouched surplus</button><button type="button" data-t="used oil" data-u="L">🛢️ Used oil</button><button type="button" data-t="rice water" data-u="L">💧 Rice or dal water</button><button type="button" data-t="greasy water" data-u="L">🚰 Greasy water</button><button type="button" data-t="plastic packaging" data-u="kg">📦 Packaging</button></div>
+        <button type="button" class="btn ghost" id="detect">Suggest from photo (free, beta)</button>
+        <button class="btn" id="go">Sort this waste</button>
+      </div>
+      <div class="out" id="results"><div class="empty">Your streams will appear here, each with a countdown.</div></div>
+    </div>
+  </section>
+
+  <section id="log" class="log">
+    <h2>A logbook for every batch</h2>
+    <div class="bar"><span>Each batch is saved with its streams, destinations and pickup status.</span><button class="btn ghost" id="csv">Download CSV</button></div>
+    <div id="logList" class="loglist"><div class="empty">Sort a batch to start your log.</div></div>
+  </section>
+
+  <section id="insights" class="ins">
+    <h2>What to cook less of, and what to expect</h2>
+    <div class="grid3"><div class="mini-card" id="fc"></div><div class="mini-card" id="dishRank"></div><div class="mini-card" id="imp"></div></div>
+    <div class="grid2"><div class="mini-card" id="donut"></div><div class="mini-card" id="trend"></div></div>
+    <p class="note">These are simple averages from your own logs, not a trained prediction model. They get better as you log more batches.</p>
+  </section>
+
+  <section id="aws" class="aws">
+    <h2>Built on AWS</h2>
+    <div class="pills"><span>AWS Lambda</span><span>API Gateway</span><span>DynamoDB</span><span>Amazon Bedrock</span><span>SAM CLI</span><span>Amplify Hosting</span></div>
+  </section>
+</main>
+<footer>Time windows are placeholder guidance until checked against FSSAI and your local municipal rules. MessLoop is a decision aid, not a food-safety certification.</footer>
+<script src="app.js"></script>
+<script src="extras.js"></script>
+</body>
+</html>
